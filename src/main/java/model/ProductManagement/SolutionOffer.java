@@ -40,4 +40,8 @@ public class SolutionOffer {
         return price;
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
 }

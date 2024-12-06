@@ -1,4 +1,4 @@
-package model.InputValidation;
+package model.Validation;
 
 import java.util.Scanner;
 

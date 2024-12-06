@@ -16,7 +16,7 @@ import model.MarketModel.Market;
 import model.MarketModel.MarketChannelAssignment;
 import model.ProductManagement.Product;
 import model.ProductManagement.SolutionOffer;
-import model.InputValidation;
+import model.Validation.InputValidation;
 
 /**
  *
@@ -134,26 +134,37 @@ public class DigitalMarketingApplication {
       
       public static void adminReportsMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Reports Menu:");
-        System.out.println("1. Market Profitability");
-        System.out.println("2. Channel Profitability");
-        System.out.println("3. Advertising Efficiency");
-        System.out.print("Enter your choice: ");
-        int choice = InputValidation.getValidIntInput("Enter your choice: ", 1, 3);
-      
-        switch (choice) {
-            case 1:
-                generateMarketProfitabilityReport(solutionOffers);
-             break;
-         case 2:
-             generateChannelProfitabilityReport(solutionOffers);
-             break;
-         case 3:
-             generateAdvertisingEfficiencyReport(solutionOffers);
-          break;
-      default:
-          System.out.println("Invalid choice.");
-  }
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Reports Menu:");
+            System.out.println("1. Market Profitability");
+            System.out.println("2. Channel Profitability");
+            System.out.println("3. Advertising Efficiency");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+    
+            int choice = InputValidation.getValidIntInput("Enter your choice: ", 1, 4);
+    
+            switch (choice) {
+                case 1:
+                    generateMarketProfitabilityReport(solutionOffers);
+                    break;
+                case 2:
+                    generateChannelProfitabilityReport(solutionOffers);
+                    break;
+                case 3:
+                    generateAdvertisingEfficiencyReport(solutionOffers);
+                    break;
+                case 4:
+                    System.out.println("Exiting Reports Menu...");
+                    exit = true; // Exit the loop
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+            System.out.println(); // Add spacing for better readability
+        }
+        
 }
 
 public static void customerShoppingMenu(ArrayList<SolutionOffer> solutionOffers) {
