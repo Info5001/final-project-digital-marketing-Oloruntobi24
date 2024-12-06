@@ -28,6 +28,11 @@ public class Product {
         orderItems = new ArrayList<OrderItem>();
     }
 
+    public Product(String name) {
+        this.name = name;
+        this.orderItems = new ArrayList<>();
+    }
+
     public Product(String n, int fp, int cp, int tp) {
         name = n;
         floorPrice = fp;

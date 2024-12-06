@@ -32,4 +32,12 @@ public class SolutionOffer {
 
     }
 
+    public MarketChannelAssignment getMarketChannelComb() {
+        return marketChannelComb;
+    }
+    
+    public int getPrice() {
+        return price;
+    }
+
 }

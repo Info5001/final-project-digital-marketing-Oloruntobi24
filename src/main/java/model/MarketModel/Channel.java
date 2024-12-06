@@ -10,5 +10,19 @@ package model.MarketModel;
  * @author kal bugrara
  */
 public class Channel {
+    private String name;
+
+    public Channel() {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Channel{name='" + name + "'}";
+    }
 
 }

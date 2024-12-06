@@ -24,4 +24,14 @@ public class Market {
     characteristics = new ArrayList<String>();
     characteristics.add(s);
   }
+
+  public ArrayList<String> getName() {
+    characteristics = new ArrayList<String>();
+    return characteristics;
+}
+
+public void setName(ArrayList<String> name) {
+    this.characteristics = name;
+}
+
 }
