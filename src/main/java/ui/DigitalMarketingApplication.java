@@ -17,6 +17,7 @@ import model.MarketModel.MarketChannelAssignment;
 import model.ProductManagement.Product;
 import model.ProductManagement.SolutionOffer;
 import model.Validation.InputValidation;
+import model.Adscost.AdvertisingCosts;
 
 /**
  *
@@ -36,12 +37,21 @@ public class DigitalMarketingApplication {
        Random random = new Random();
    
        // Create markets
+       Market market1 = new Market ("Students");
+       Market market2 = new Market ("Professionals");
+       Market market3 = new Market ("Seniors");
+
        ArrayList<Market> markets = new ArrayList<>();
        for (int i = 0; i < 3; i++) {
            markets.add(new Market(faker.company().industry()));
        }
    
        // Create channels
+       Channel channel1 = new Channel ("Television");
+       Channel channel2 = new Channel ("Radio");
+       Channel channel3 = new Channel ("Newspaper");
+       Channel channel4 = new Channel ("Internet");
+
        ArrayList<Channel> channels = new ArrayList<>();
        for (int i = 0; i < 4; i++) {
                 channels.add(new Channel(faker.company().name()));
@@ -123,17 +133,43 @@ public class DigitalMarketingApplication {
      }
    }
    
-   public static void generateAdvertisingEfficiencyReport(ArrayList<SolutionOffer> solutionOffers) {
-        System.out.println("Advertising Efficiency Report:");
-        for (SolutionOffer offer : solutionOffers) {
-            ArrayList<String> market = offer.getMarketChannelComb().getMarket().getName();
-            String channel = offer.getMarketChannelComb().getChannel().getName();
-            int cost = calculateAdvertisingCost(offer);
-      
-            System.out.printf("Market: %s, Channel: %s, Advertising Cost: %d\n",
-                market, channel, cost);
+   public static void generateAdvertisingEfficiencyReport() {
+    System.out.println("Advertising Efficiency Report:");
+
+    Map<String, Map<String, Integer>> costs = AdvertisingCosts.getAllCosts();
+    int grandTotal = 0;
+
+    // Print table header
+    System.out.printf("%-15s %-15s %-15s %-15s %-15s\n", "Channel", "Market 1", "Market 2", "Market 3", "Total");
+
+    for (String channel : costs.keySet()) {
+        int channelTotal = 0;
+
+        // Start row for each channel
+        System.out.printf("%-15s", channel);
+
+        for (Map.Entry<String, Integer> entry : costs.get(channel).entrySet()) {
+            int cost = entry.getValue();
+            channelTotal += cost;
+            grandTotal += cost;
+
+            // Print each market's cost
+            System.out.printf("%-15d", cost);
         }
-      }
+
+        // Print total for the channel
+        System.out.printf("%-15d\n", channelTotal);
+    }
+
+    // Print totals row
+    System.out.print("Total          ");
+    int market1Total = costs.values().stream().mapToInt(m -> m.getOrDefault("Market 1", 0)).sum();
+    int market2Total = costs.values().stream().mapToInt(m -> m.getOrDefault("Market 2", 0)).sum();
+    int market3Total = costs.values().stream().mapToInt(m -> m.getOrDefault("Market 3", 0)).sum();
+
+    System.out.printf("%-15d %-15d %-15d %-15d\n", market1Total, market2Total, market3Total, grandTotal);
+}
+
       
       public static void adminReportsMenu() {
         Scanner scanner = new Scanner(System.in);
