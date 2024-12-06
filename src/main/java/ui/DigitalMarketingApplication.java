@@ -44,12 +44,12 @@ public class DigitalMarketingApplication {
        // Create channels
        ArrayList<Channel> channels = new ArrayList<>();
        for (int i = 0; i < 4; i++) {
-           channels.add(new Channel());
+                channels.add(new Channel(faker.company().name()));
+                
        }
    
        // Create products and solution offers
        ArrayList<Product> products = new ArrayList<>();
-       ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
        for (int i = 0; i < 30; i++) {
            Product product = new Product(faker.commerce().productName());
            products.add(product);
@@ -57,8 +57,9 @@ public class DigitalMarketingApplication {
            // Assign products to a solution offer randomly
            MarketChannelAssignment assignment = new MarketChannelAssignment(
                markets.get(random.nextInt(markets.size())),
-               channels.get(random.nextInt(channels.size()))
+               channels.get(random.nextInt(channels.size()))              
            );
+           System.out.println("Assigned Channel: " + assignment.getChannel().getName());
            SolutionOffer offer = new SolutionOffer(assignment);
            offer.addProduct(product);
            offer.setPrice(faker.number().numberBetween(10, 500));
@@ -97,8 +98,10 @@ public class DigitalMarketingApplication {
    
      public static void generateMarketProfitabilityReport(ArrayList<SolutionOffer> solutionOffers) {
        System.out.println("Market Profitability Report:");
+       System.out.println("Solution offers size: " + solutionOffers.size());
        for (SolutionOffer offer : solutionOffers) {
            ArrayList<String> market = offer.getMarketChannelComb().getMarket().getName();
+           System.out.println("Market: " + offer.getMarketChannelComb().getMarket().getName());
            int revenue = offer.getPrice();
            int advertisingCost = calculateAdvertisingCost(offer);
            int profit = revenue - advertisingCost;

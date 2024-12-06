@@ -27,6 +27,6 @@ public class MarketChannelAssignment {
 
 public Channel getChannel() {
     return channel;
-}
+  }
 
 }

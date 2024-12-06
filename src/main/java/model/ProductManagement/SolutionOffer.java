@@ -19,7 +19,7 @@ public class SolutionOffer {
     MarketChannelAssignment marketChannelComb;
 
     public SolutionOffer(MarketChannelAssignment m) {
-        marketChannelComb = m;
+        this.marketChannelComb = m;
         products = new ArrayList<Product>();
     }
 

@@ -12,7 +12,7 @@ package model.MarketModel;
 public class Channel {
     private String name;
 
-    public Channel() {
+    public Channel(String string) {
         this.name = name;
     }
 
