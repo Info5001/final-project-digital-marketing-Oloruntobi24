@@ -31,6 +31,7 @@ public class DigitalMarketingApplication {
 
    static ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
      public static void main(String[] args) {
+        AdvertisingCosts.initializeCosts();
    
        Business business = ConfigureABusiness.createABusinessAndLoadALotOfData("Amazon", 50, 10, 30, 100, 10);
        Faker faker = new Faker();
@@ -41,10 +42,7 @@ public class DigitalMarketingApplication {
        Market market2 = new Market ("Professionals");
        Market market3 = new Market ("Seniors");
 
-       ArrayList<Market> markets = new ArrayList<>();
-       for (int i = 0; i < 3; i++) {
-           markets.add(new Market(faker.company().industry()));
-       }
+       ArrayList<Market> markets = new ArrayList<>(Arrays.asList(market1, market2, market3));
    
        // Create channels
        Channel channel1 = new Channel ("Television");
@@ -52,34 +50,41 @@ public class DigitalMarketingApplication {
        Channel channel3 = new Channel ("Newspaper");
        Channel channel4 = new Channel ("Internet");
 
-       ArrayList<Channel> channels = new ArrayList<>();
-       for (int i = 0; i < 4; i++) {
-                channels.add(new Channel(faker.company().name()));
-                
-       }
+       ArrayList<Channel> channels = new ArrayList<>(Arrays.asList(channel1, channel2, channel3, channel4));
+
    
        // Create products and solution offers
+       // Create products dynamically
        ArrayList<Product> products = new ArrayList<>();
+
        for (int i = 0; i < 30; i++) {
-           Product product = new Product(faker.commerce().productName());
-           products.add(product);
+           String productName = faker.commerce().productName();
+           int minPrice = faker.number().numberBetween(10, 50);
+           int maxPrice = faker.number().numberBetween(51, 100);
+           int targetPrice = faker.number().numberBetween(minPrice, maxPrice);
+           products.add(new Product(productName, minPrice, maxPrice, targetPrice));
+       }
    
            // Assign products to a solution offer randomly
-           MarketChannelAssignment assignment = new MarketChannelAssignment(
-               markets.get(random.nextInt(markets.size())),
-               channels.get(random.nextInt(channels.size()))              
-           );
-           System.out.println("Assigned Channel: " + assignment.getChannel().getName());
-           SolutionOffer offer = new SolutionOffer(assignment);
-           offer.addProduct(product);
-           offer.setPrice(faker.number().numberBetween(10, 500));
-           solutionOffers.add(offer);
+           // Assign products to markets and channels
+            ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
+
+            for (Product product : products) {
+                Market market = markets.get(random.nextInt(markets.size()));
+                Channel channel = channels.get(random.nextInt(channels.size()));
+                MarketChannelAssignment assignment = new MarketChannelAssignment(market, channel);
+
+                SolutionOffer offer = new SolutionOffer(assignment);
+                offer.addProduct(product);
+                offer.setPrice(product.getTargetPrice());
+                solutionOffers.add(offer);
+            }
            System.out.println("Data model populated with markets, channels, and products."); 
          }
-
-         Scanner scanner = new Scanner(System.in);
-    while (true) {
-        System.out.println("\nMain Menu:");
+    
+        
+        while (true) {
+        System.out.println("Main Menu:");
         System.out.println("1. Admin Reports");
         System.out.println("2. Customer Shopping");
         System.out.println("0. Exit");
@@ -100,6 +105,7 @@ public class DigitalMarketingApplication {
                 System.out.println("Invalid choice. Please try again.");
         }
     }
+    
   }
    
        private static int calculateAdvertisingCost(SolutionOffer offer) {
@@ -133,7 +139,7 @@ public class DigitalMarketingApplication {
      }
    }
    
-   public static void generateAdvertisingEfficiencyReport() {
+   public static void generateAdvertisingEfficiencyReport(ArrayList<SolutionOffer> solutionOffers) {
     System.out.println("Advertising Efficiency Report:");
 
     Map<String, Map<String, Integer>> costs = AdvertisingCosts.getAllCosts();

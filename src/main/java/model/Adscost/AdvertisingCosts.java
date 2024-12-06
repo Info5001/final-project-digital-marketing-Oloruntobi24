@@ -6,25 +6,25 @@ public class AdvertisingCosts {
     private static Map<String, Map<String, Integer>> advertisingCosts = new HashMap<>();
 
     public static void initializeCosts() {
-        advertisingCosts.put("Channel 1", Map.of(
-            "Market 1", 1414001,
-            "Market 2", 1663397,
-            "Market 3", 1167187
+        advertisingCosts.put("Television", Map.of(
+            "Students", 1414001,
+            "Professionals", 1663397,
+            "Seniors", 1167187
         ));
-        advertisingCosts.put("Channel 2", Map.of(
-            "Market 1", 1072266,
-            "Market 2", 1040847,
-            "Market 3", 626880
+        advertisingCosts.put("Radio", Map.of(
+            "Students", 1072266,
+            "Professionals", 1040847,
+            "Seniors", 626880
         ));
-        advertisingCosts.put("Channel 3", Map.of(
-            "Market 1", 509258,
-            "Market 2", 1805058,
-            "Market 3", 821457
+        advertisingCosts.put("Newspaper", Map.of(
+            "Students", 509258,
+            "Professionals", 1805058,
+            "Seniors", 821457
         ));
-        advertisingCosts.put("Channel 4", Map.of(
-            "Market 1", 688083,
-            "Market 2", 587244,
-            "Market 3", 707078
+        advertisingCosts.put("Internet", Map.of(
+            "Students", 688083,
+            "Professionals", 587244,
+            "Students", 707078
         ));
     }
 
