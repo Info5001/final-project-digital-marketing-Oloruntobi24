@@ -80,7 +80,7 @@ public class DigitalMarketingApplication {
                 solutionOffers.add(offer);
             }
            System.out.println("Data model populated with markets, channels, and products."); 
-         }
+        }
     
         
         while (true) {
