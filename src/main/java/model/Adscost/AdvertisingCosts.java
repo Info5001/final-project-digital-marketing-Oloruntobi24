@@ -24,7 +24,7 @@ public class AdvertisingCosts {
         advertisingCosts.put("Internet", Map.of(
             "Students", 688083,
             "Professionals", 587244,
-            "Students", 707078
+            "Seniors", 707078
         ));
     }
 

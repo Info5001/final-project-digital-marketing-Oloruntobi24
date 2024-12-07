@@ -30,67 +30,69 @@ public class DigitalMarketingApplication {
    */
 
    static ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
-     public static void main(String[] args) {
-        AdvertisingCosts.initializeCosts();
+   static Scanner scanner = new Scanner(System.in);
+        public static void main(String[] args) {
+           AdvertisingCosts.initializeCosts();
+      
+          Business business = ConfigureABusiness.createABusinessAndLoadALotOfData("Amazon", 50, 10, 30, 100, 10);
+          Faker faker = new Faker();
+          Random random = new Random();
+      
+          // Create markets
+          Market market1 = new Market ("Students");
+          Market market2 = new Market ("Professionals");
+          Market market3 = new Market ("Seniors");
    
-       Business business = ConfigureABusiness.createABusinessAndLoadALotOfData("Amazon", 50, 10, 30, 100, 10);
-       Faker faker = new Faker();
-       Random random = new Random();
+          ArrayList<Market> markets = new ArrayList<>(Arrays.asList(market1, market2, market3));
+      
+          // Create channels
+          Channel channel1 = new Channel ("Television");
+          Channel channel2 = new Channel ("Radio");
+          Channel channel3 = new Channel ("Newspaper");
+          Channel channel4 = new Channel ("Internet");
    
-       // Create markets
-       Market market1 = new Market ("Students");
-       Market market2 = new Market ("Professionals");
-       Market market3 = new Market ("Seniors");
-
-       ArrayList<Market> markets = new ArrayList<>(Arrays.asList(market1, market2, market3));
+          ArrayList<Channel> channels = new ArrayList<>(Arrays.asList(channel1, channel2, channel3, channel4));
    
-       // Create channels
-       Channel channel1 = new Channel ("Television");
-       Channel channel2 = new Channel ("Radio");
-       Channel channel3 = new Channel ("Newspaper");
-       Channel channel4 = new Channel ("Internet");
-
-       ArrayList<Channel> channels = new ArrayList<>(Arrays.asList(channel1, channel2, channel3, channel4));
-
+      
+          // Create products and solution offers
+          // Create products dynamically
+          ArrayList<Product> products = new ArrayList<>();
    
-       // Create products and solution offers
-       // Create products dynamically
-       ArrayList<Product> products = new ArrayList<>();
-
-       for (int i = 0; i < 30; i++) {
-           String productName = faker.commerce().productName();
-           int minPrice = faker.number().numberBetween(10, 50);
-           int maxPrice = faker.number().numberBetween(51, 100);
-           int targetPrice = faker.number().numberBetween(minPrice, maxPrice);
-           products.add(new Product(productName, minPrice, maxPrice, targetPrice));
-       }
+          for (int i = 0; i < 30; i++) {
+              String productName = faker.commerce().productName();
+              int minPrice = faker.number().numberBetween(10, 50);
+              int maxPrice = faker.number().numberBetween(51, 100);
+              int targetPrice = faker.number().numberBetween(minPrice, maxPrice);
+              products.add(new Product(productName, minPrice, maxPrice, targetPrice));
+          }
+      
+              // Assign products to a solution offer randomly
+              // Assign products to markets and channels
+               ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
    
-           // Assign products to a solution offer randomly
-           // Assign products to markets and channels
-            ArrayList<SolutionOffer> solutionOffers = new ArrayList<>();
-
-            for (Product product : products) {
-                Market market = markets.get(random.nextInt(markets.size()));
-                Channel channel = channels.get(random.nextInt(channels.size()));
-                MarketChannelAssignment assignment = new MarketChannelAssignment(market, channel);
-
-                SolutionOffer offer = new SolutionOffer(assignment);
-                offer.addProduct(product);
-                offer.setPrice(product.getTargetPrice());
-                solutionOffers.add(offer);
-            }
-           System.out.println("Data model populated with markets, channels, and products."); 
-        }
-    
-        
-        while (true) {
-        System.out.println("Main Menu:");
-        System.out.println("1. Admin Reports");
-        System.out.println("2. Customer Shopping");
-        System.out.println("0. Exit");
-        System.out.print("Enter your choice: ");
-
-        int choice = scanner.nextInt();
+               for (Product product : products) {
+                   Market market = markets.get(random.nextInt(markets.size()));
+                   Channel channel = channels.get(random.nextInt(channels.size()));
+                   MarketChannelAssignment assignment = new MarketChannelAssignment(market, channel);
+   
+                   SolutionOffer offer = new SolutionOffer(assignment);
+                   offer.addProduct(product);
+                   offer.setPrice(product.getTargetPrice());
+                   solutionOffers.add(offer);
+                   System.out.println("Data model populated with markets, channels, and products.");
+               }
+               
+       
+       
+           
+           while (true) {
+           System.out.println("Main Menu:");
+           System.out.println("1. Admin Reports");
+           System.out.println("2. Customer Shopping");
+           System.out.println("0. Exit");
+           System.out.print("Enter your choice: ");
+   
+           int choice = scanner.nextInt();
         switch (choice) {
             case 1:
                 adminReportsMenu();
